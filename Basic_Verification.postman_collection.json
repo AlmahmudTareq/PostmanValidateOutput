@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "aa78a025-51a8-44a6-9bd1-519c34cee3f0",
+		"name": "Basic_Verification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "reqres.in_get_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Validating Status Code\"] = responseCode.code == 200;    //val status code\r",
+							"tests[\"Validating response body\"] = responseBody.has(\"avatar\"); //val body has str\r",
+							"\r",
+							"pm.test(\"Validate data with ID =7\", function()\r",
+							"{\r",
+							"    responseJson=pm.response.json();\r",
+							"    pm.expect(responseJson.data[0].id).to.eql(7);   //json path\r",
+							"    pm.expect(responseJson.data[0].first_name).to.eql(\"Michael\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Headers - Server\", function () {\r",
+							"    pm.response.to.have.header(\"Server\");\r",
+							"    pm.expect(pm.response.headers.get(\"Server\")).to.eql(\"cloudflare\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				},
+				"description": "This test will sent a get request and validate some data inside the response Body. No variable or scripting used."
+			},
+			"response": []
+		}
+	]
+}
